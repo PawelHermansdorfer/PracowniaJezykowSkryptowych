@@ -1,6 +1,6 @@
 **Zadanie 1** Gra w kółko i krzyżyk w Bashu
 
-:white_check_mark: 3.0 Działa w trybie gry turowej [Link do commita 1](https://github.com/kprzystalski/)
+:white_check_mark: 3.0 Działa w trybie gry turowej [Link do commita 1](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/a767c3fc2e4028f16b170f95b56d96be7c997d75)
 
 :x: 4.0 Pozwala na zapis i odtwarzanie przerwanej gry (save game) [Link do commita2 ](https://github.com/kprzystalski/)
 
