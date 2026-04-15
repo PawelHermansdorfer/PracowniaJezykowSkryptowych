@@ -6,6 +6,6 @@
 
 :x: 5.0 Pozwala na grę z komputerem. [Link do commita 3](https://github.com/kprzystalski/)
 
-Kod: [Link do zadania 1](https://hub.docker.com/kprzystalski/)
+Kod: [Link do zadania 1](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Bash/main.sh)
 
 <!-- https://github.com/user-attachments/assets/filmik/ -->
