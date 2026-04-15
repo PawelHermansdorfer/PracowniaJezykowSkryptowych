@@ -2,7 +2,7 @@
 
 :white_check_mark: 3.0 Działa w trybie gry turowej [Link do commita 1](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/a767c3fc2e4028f16b170f95b56d96be7c997d75)
 
-:x: 4.0 Pozwala na zapis i odtwarzanie przerwanej gry (save game) [Link do commita2 ](https://github.com/kprzystalski/)
+:white_check_mark: 4.0 Pozwala na zapis i odtwarzanie przerwanej gry (save game) [Link do commita 2](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/24718f9ac99909d9efe834f9629d4748dbba888f)
 
 :x: 5.0 Pozwala na grę z komputerem. [Link do commita 3](https://github.com/kprzystalski/)
 
