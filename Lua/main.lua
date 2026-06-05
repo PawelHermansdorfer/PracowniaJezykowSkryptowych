@@ -4,6 +4,16 @@ local board = {}
 
 love.window.setMode(960, 960, { resizable = true, vsync = true })
 
+local SAVE_FILE = "save.txt"
+local save_button = {}
+local load_button = {}
+function xy_in_rect(px, py, r)
+    return px >= r.x and
+           px <= r.x + r.w and
+           py >= r.y and
+           py <= r.y + r.h
+end
+
 function clear_board()
     for y = 1, dim_y do
         for x = 1, dim_x do
@@ -354,6 +364,90 @@ function handle_block_down_move()
 end
 
 
+function save_game()
+    local block_index = 1
+
+    for i, block in ipairs(blocks) do
+        if block == current_block then
+            block_index = i
+            break
+        end
+    end
+
+    local data = ""
+
+    data = data .. score .. "\n"
+    data = data .. block_index .. "\n"
+    data = data .. current_block_field_idx .. "\n"
+    data = data .. current_block_x .. "\n"
+    data = data .. current_block_y .. "\n"
+
+    for y = 1, dim_y do
+        for x = 1, dim_x do
+            local b = get_block(x, y)
+
+            data = data ..
+                b[1] .. "," ..
+                b[2][1] .. "," ..
+                b[2][2] .. "," ..
+                b[2][3] .. "," ..
+                b[2][4] .. "\n"
+        end
+    end
+
+    love.filesystem.write("save.txt", data)
+end
+
+function load_game()
+    if not love.filesystem.getInfo("save.txt") then
+        return false
+    end
+
+    local data = love.filesystem.read("save.txt")
+
+    local lines = {}
+
+    for line in data:gmatch("[^\r\n]+") do
+        table.insert(lines, line)
+    end
+
+    local idx = 1
+
+    score = tonumber(lines[idx]); idx = idx + 1
+
+    local block_index = tonumber(lines[idx]); idx = idx + 1
+    current_block = blocks[block_index]
+
+    current_block_field_idx = tonumber(lines[idx]); idx = idx + 1
+    current_block_x = tonumber(lines[idx]); idx = idx + 1
+    current_block_y = tonumber(lines[idx]); idx = idx + 1
+
+    for y = 1, dim_y do
+        for x = 1, dim_x do
+            local line = lines[idx]
+            idx = idx + 1
+
+            local values = {}
+
+            for v in line:gmatch("[^,]+") do
+                table.insert(values, tonumber(v))
+            end
+
+            local b = get_block(x, y)
+
+            b[1] = values[1]
+            b[2] = {
+                values[2],
+                values[3],
+                values[4],
+                values[5]
+            }
+        end
+    end
+
+    return true
+end
+
 function love.keypressed(key)
     if key == "left" then
         local nx = current_block_x - 1
@@ -376,6 +470,24 @@ function love.keypressed(key)
         if is_valid_position(current_block, next_idx, current_block_x, current_block_y) then
             current_block_field_idx = next_idx
         end
+
+    elseif key == "s" then
+        save_game()
+
+    elseif key == "l" then
+        load_game()
+    end
+end
+
+function love.mousepressed(x, y, button)
+    if button ~= 1 then
+        return
+    end
+
+    if xy_in_rect(x, y, save_button) then
+        save_game()
+    elseif xy_in_rect(x, y, load_button) then
+        load_game()
     end
 end
 
@@ -402,6 +514,8 @@ love.graphics.setFont(ui_font)
 function love.draw()
     local w, h = love.graphics.getDimensions()
     local cell_size = math.min(h / dim_y, (w * 0.7) / dim_x)
+    local center_bar = (dim_x*cell_size)
+    local right_center = center_bar + (w - dim_x*cell_size)/2 
 
     love.graphics.clear(0, 0, 0)
 
@@ -409,7 +523,7 @@ function love.draw()
     local text_width = ui_font:getWidth(text)
     local text_height = ui_font:getHeight()
 
-    local text_x = (dim_x*cell_size) + (w - dim_x*cell_size)/2 - text_width/2
+    local text_x =  right_center - text_width/2
     local text_y = 0
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(text, text_x, text_y)
@@ -461,6 +575,55 @@ function love.draw()
             )
         end
     end
+
+    -- Save/load
+    local button_width = w * 0.3 * 0.9
+
+    save_button.x = right_center - button_width/2
+    save_button.y = 80
+    save_button.w = button_width
+    save_button.h = 50
+
+    load_button.x = right_center - button_width/2
+    load_button.y = 150
+    load_button.w = button_width
+    load_button.h = 50
+
+    love.graphics.setColor(0.2, 0.6, 0.2)
+    love.graphics.rectangle(
+        "fill",
+        save_button.x,
+        save_button.y,
+        save_button.w,
+        save_button.h
+    )
+
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        "SAVE",
+        save_button.x,
+        save_button.y + 12,
+        save_button.w,
+        "center"
+    )
+
+    love.graphics.setColor(0.2, 0.2, 0.8)
+    love.graphics.rectangle(
+        "fill",
+        load_button.x,
+        load_button.y,
+        load_button.w,
+        load_button.h
+    )
+
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        "LOAD",
+        load_button.x,
+        load_button.y + 12,
+        load_button.w,
+        "center"
+    )
 
 end
 
