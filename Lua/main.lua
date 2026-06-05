@@ -2,6 +2,22 @@ local dim_x = 10
 local dim_y = 20
 local board = {}
 
+local move_sound = love.audio.newSource("sound_1.wav", "static")
+move_sound:setVolume(0.5)
+
+local lock_block_sound = love.audio.newSource("sound_2.wav", "static")
+lock_block_sound:setVolume(0.5)
+
+local clear_row_sound = love.audio.newSource("sound_3.wav", "static")
+clear_row_sound:setVolume(0.5)
+
+local loose_sound = love.audio.newSource("sound_4.wav", "static")
+loose_sound:setVolume(1)
+function play_sound(sound)
+    local s = sound:clone()
+    s:play()
+end
+
 love.window.setMode(960, 960, { resizable = true, vsync = true })
 
 local SAVE_FILE = "save.txt"
@@ -330,19 +346,19 @@ function clear_lines()
             for yy = y, 2, -1 do
                 for x = 1, dim_x do
                     local src = get_block(x, yy - 1)
-                    local dst = get_block(x, yy)
+                    local dest = get_block(x, yy)
 
-                    dst[1] = src[1]
-                    dst[2] = src[2]
+                    dest[1] = src[1]
+                    dest[2] = src[2]
                 end
             end
 
             for x = 1, dim_x do
                 local top = get_block(x, 1)
                 top[1] = 0
-                top[2] = {0, 0, 0, 1}
+                top[2] = {0, 0, 0, 0}
             end
-
+            play_sound(clear_row_sound)
         else
             y = y - 1
         end
@@ -354,12 +370,14 @@ end
 function handle_block_down_move()
     if is_valid_position(current_block, current_block_field_idx, current_block_x, current_block_y + 1) then
         current_block_y = current_block_y + 1
+        play_sound(move_sound)
     else
         finish_block()
         local points = clear_lines()
         points = points * points
         score = score + (points*100)
         next_block()
+        play_sound(lock_block_sound)
     end
 end
 
@@ -387,7 +405,7 @@ function save_game()
             local b = get_block(x, y)
 
             data = data ..
-                b[1] .. "," ..
+                b[1]    .. "," ..
                 b[2][1] .. "," ..
                 b[2][2] .. "," ..
                 b[2][3] .. "," ..
@@ -453,12 +471,14 @@ function love.keypressed(key)
         local nx = current_block_x - 1
         if is_valid_position(current_block, current_block_field_idx, nx, current_block_y) then
             current_block_x = nx
+            play_sound(move_sound)
         end
 
     elseif key == "right" then
         local nx = current_block_x + 1
         if is_valid_position(current_block, current_block_field_idx, nx, current_block_y) then
             current_block_x = nx
+            play_sound(move_sound)
         end
 
     elseif key == "down" then
@@ -498,6 +518,7 @@ function love.update(dt)
         next_block()
         time_since_last_drop = 0
         score = 0
+        play_sound(loose_sound)
     else
         time_since_last_drop = time_since_last_drop + dt
         if time_since_last_drop >= 1 then
