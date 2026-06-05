@@ -15,7 +15,7 @@ Kod: [Link do zadania 1](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 3.0 Postawowa wersja dekstopowa z obsługą na klawiaturze - minimum 4 rodzaje klocków [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/6de76dbd99178c2398b981587bc2a23f458910f8)
 
-:white_check_mark: 3.5 Zapis i odczyt gier [Link do commita]()
+:white_check_mark: 3.5 Zapis i odczyt gier [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/d886ecbaaec0dd17a420a23f12552decd114f36e)
 
 :white_check_mark: 4.0 Dodanie efektów dźwiękowych przy akcjach [Link do commita]()
 
