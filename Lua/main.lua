@@ -21,6 +21,11 @@ local SAVE_FILE = "save.txt"
 local save_button = {}
 local load_button = {}
 
+local up_button = {}
+local down_button = {}
+local left_button = {}
+local right_button = {}
+
 function xy_in_rect(px, py, r)
     return px >= r.x and px <= r.x + r.w and
            py >= r.y and py <= r.y + r.h
@@ -455,28 +460,45 @@ function load_game()
     return true
 end
 
+local UP = 0
+local LEFT = 1
+local RIGHT = 2
+local DOWN = 3
+
+function input(key)
+    if key == UP then
+        local next_idx = 1 + (current_block_field_idx % #current_block.fields)
+        if is_valid_position(current_block, next_idx, current_block_x, current_block_y) then
+            current_block_field_idx = next_idx
+        end
+    elseif key == LEFT then
+        local nx = current_block_x - 1
+        if is_valid_position(current_block, current_block_field_idx, nx, current_block_y) then
+            current_block_x = nx
+            play_sound(move_sound)
+        end
+    elseif key == RIGHT then
+        local nx = current_block_x + 1
+        if is_valid_position(current_block, current_block_field_idx, nx, current_block_y) then
+            current_block_x = nx
+            play_sound(move_sound)
+        end
+    elseif key == DOWN then
+        handle_block_down_move()
+        time_since_last_drop = 0
+    end
+end
+
 function love.keypressed(key)
     if not clearing_lines then
         if key == "left" then
-            local nx = current_block_x - 1
-            if is_valid_position(current_block, current_block_field_idx, nx, current_block_y) then
-                current_block_x = nx
-                play_sound(move_sound)
-            end
+            input(LEFT)
         elseif key == "right" then
-            local nx = current_block_x + 1
-            if is_valid_position(current_block, current_block_field_idx, nx, current_block_y) then
-                current_block_x = nx
-                play_sound(move_sound)
-            end
+            input(RIGHT)
         elseif key == "down" then
-            handle_block_down_move()
-            time_since_last_drop = 0
+            input(DOWN)
         elseif key == "up" then
-            local next_idx = 1 + (current_block_field_idx % #current_block.fields)
-            if is_valid_position(current_block, next_idx, current_block_x, current_block_y) then
-                current_block_field_idx = next_idx
-            end
+            input(UP)
         end
     end
 end
@@ -490,6 +512,36 @@ function love.mousepressed(x, y, button)
         save_game()
     elseif xy_in_rect(x, y, load_button) then
         load_game()
+
+    elseif xy_in_rect(x, y, up_button) then
+            input(UP)
+    elseif xy_in_rect(x, y, down_button) then
+            input(DOWN)
+    elseif xy_in_rect(x, y, left_button) then
+            input(LEFT)
+    elseif xy_in_rect(x, y, right_button) then
+            input(RIGHT)
+    end
+end
+
+function love.touchpressed(id, x, y)
+    local w, h = love.graphics.getDimensions()
+    x = x * w
+    y = y * h
+
+    if xy_in_rect(x, y, save_button) then
+        save_game()
+    elseif xy_in_rect(x, y, load_button) then
+        load_game()
+
+    elseif xy_in_rect(x, y, up_button) then
+            input(UP)
+    elseif xy_in_rect(x, y, down_button) then
+            input(DOWN)
+    elseif xy_in_rect(x, y, left_button) then
+            input(LEFT)
+    elseif xy_in_rect(x, y, right_button) then
+            input(RIGHT)
     end
 end
 
@@ -654,6 +706,15 @@ function love.draw()
         save_button.h
     )
 
+    love.graphics.setColor(0, 0.2, 0)
+    love.graphics.rectangle(
+        "line",
+        save_button.x,
+        save_button.y,
+        save_button.w,
+        save_button.h
+    )
+
     love.graphics.setColor(1,1,1)
     love.graphics.printf(
         "SAVE",
@@ -677,12 +738,149 @@ function love.draw()
         load_button.h
     )
 
+    love.graphics.setColor(0, 0, 0.2)
+    love.graphics.rectangle(
+        "line",
+        load_button.x,
+        load_button.y,
+        load_button.w,
+        load_button.h
+    )
+
     love.graphics.setColor(1,1,1)
     love.graphics.printf(
         "LOAD",
         load_button.x,
         load_button.y + 12,
         load_button.w,
+        "center"
+    )
+
+    -- Arrows
+    button_width = w * 0.3 * 0.4
+    local button_offset = 10
+    up_button.x = right_center - button_width/2
+    up_button.y = h - button_width*2 - button_offset*2
+    up_button.w = button_width
+    up_button.h = button_width
+
+    down_button.x = up_button.x
+    down_button.y = up_button.y + up_button.h + button_offset
+    down_button.w = button_width 
+    down_button.h = button_width
+
+    left_button.x = down_button.x - (button_width + button_offset)
+    left_button.y = down_button.y
+    left_button.w = button_width 
+    left_button.h = button_width 
+
+    right_button.x = down_button.x + (button_width + button_offset)
+    right_button.y = down_button.y
+    right_button.w = button_width 
+    right_button.h = button_width 
+
+    -- Fills
+    love.graphics.setColor(0.1, 0.1, 0.1, 0.3)
+    love.graphics.rectangle(
+        "fill",
+        up_button.x,
+        up_button.y,
+        up_button.w,
+        up_button.h
+    )
+
+    love.graphics.rectangle(
+        "fill",
+        down_button.x,
+        down_button.y,
+        down_button.w,
+        down_button.h
+    )
+
+    love.graphics.rectangle(
+        "fill",
+        left_button.x,
+        left_button.y,
+        left_button.w,
+        left_button.h
+    )
+
+    love.graphics.rectangle(
+        "fill",
+        right_button.x,
+        right_button.y,
+        right_button.w,
+        right_button.h
+    )
+
+    -- Borders
+    love.graphics.setColor(0.3, 0.3, 0.3)
+    love.graphics.rectangle(
+        "line",
+        up_button.x,
+        up_button.y,
+        up_button.w,
+        up_button.h
+    )
+
+    love.graphics.rectangle(
+        "line",
+        down_button.x,
+        down_button.y,
+        down_button.w,
+        down_button.h
+    )
+
+    love.graphics.rectangle(
+        "line",
+        left_button.x,
+        left_button.y,
+        left_button.w,
+        left_button.h
+    )
+
+    love.graphics.rectangle(
+        "line",
+        right_button.x,
+        right_button.y,
+        right_button.w,
+        right_button.h
+    )
+
+    -- Text
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        "R",
+        up_button.x,
+        up_button.y + button_width/3,
+        button_width,
+        "center"
+    )
+
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        "\\/",
+        down_button.x,
+        down_button.y + button_width/3,
+        button_width,
+        "center"
+    )
+
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        ">",
+        right_button.x,
+        right_button.y + button_width/3,
+        button_width,
+        "center"
+    )
+
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        "<",
+        left_button.x,
+        left_button.y + button_width/3,
+        button_width,
         "center"
     )
 end
