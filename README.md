@@ -30,7 +30,7 @@ Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 3.0 Należy stworzyć jeden poziom z przeszkodami oraz dziurami w które można wpaść i zginąć [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commits/main/)
 
-:white_check_mark: 3.5 Należy dodać opcję zbierania punktów [Link do commita]()
+:white_check_mark: 3.5 Należy dodać opcję zbierania punktów [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/a9398ce939c7457df29d83861e950515b151ead1)
 
 :white_check_mark: 4.0 Należy dodać przeciwników, których można zabić oraz 3 życia [Link do commita]()
 
