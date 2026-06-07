@@ -45,8 +45,79 @@ let score_text;
 let lives = 3;
 let lives_text;
 
+let level_layout;
 let level = 1;
 let max_level = 2;
+
+function
+rand(min, max)
+{
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function
+generate_level()
+{
+    let w = 20;
+    let h = 9;
+    const grid = Array.from({ length: h }, () => Array(w).fill('0'));
+
+    ////////////////////////////////////////
+    // X 1 M C I
+    let coin1 = rand(1, w-2);
+    let coin2 = rand(1, w-2);
+    while(coin2 == coin1)
+    {
+        coin2 = rand(1, w-2);
+    }
+    let coin3 = rand(1, w-2);
+    while(coin3 == coin1 || coin3 == coin2)
+    {
+        coin3 = rand(1, w-2);
+    }
+
+    let y;
+    let prev_y = rand(2, h-1);
+    for(let x = 0; x < w; ++x)
+    {
+        let place_player   = (x == 0);
+        let place_doors    = (x == w-1);
+        let empty_above    = !place_player && !place_doors;
+
+        let gap            = empty_above && (Math.random() > 0.85)
+        let same_y         = (!(x == 0) && (Math.random() > 0.8)) || place_doors;
+        let place_obstacle = !gap && empty_above && (Math.random() > 0.85);
+        let place_enemy    = !gap && empty_above && !place_obstacle && (Math.random() > 0.8);
+
+        y = rand(Math.max(prev_y - 2, 2), Math.min(prev_y + 1, h-2));
+        if(same_y) y = prev_y;
+
+        let place_coin = false;
+        let coin_y = y - 1;
+        if(x == coin1 || x == coin2 || x == coin3)
+        {
+            place_coin = true;
+            if(place_obstacle || place_enemy) coin_y -= 1;
+            if(coin_y < 0)
+            {
+                y -= 1;
+                coin_y -= 1;
+            }
+        }
+
+        if(!gap) grid[y][x] = '1';
+        if(place_player) grid[y-1][x] = 'X';
+        if(place_doors)  grid[y-1][x] = 'M';
+        if(place_obstacle) grid[y-1][x] = 'I';
+        if(place_enemy) grid[y-1][x]    = 'E';
+        if(place_coin) grid[coin_y][x]  = 'C';
+
+        prev_y = y;
+    }
+
+    return(grid.map(row => row.join(' ')).join('\n') + '\n');
+}
 
 
 function
@@ -81,10 +152,7 @@ finish_level()
     lives_text.setText('❤️'.repeat(lives));
 
     level += 1;
-    if(level > max_level)
-    {
-        level = 1;
-    }
+    next_level(player.scene);
     this.scene.restart();
 }
 
@@ -127,16 +195,18 @@ die(scene)
 {
     lives -= 1;
     score_plus = 0;
-    scene.scene.restart();
 
     if(lives <= 0)
     {
         lives = 3;
         score = 0;
+        level = 1;
+        next_level(player.scene);
         score_text.setText('Score: ' + score + ' + ' + score_plus);
     }
 
     lives_text.setText('❤️'.repeat(lives));
+    scene.scene.restart();
 }
 
 
@@ -283,6 +353,19 @@ load_level(scene, layout)
     return result;
 }
 
+function
+next_level(scene)
+{
+    if(level > max_level)
+    {
+        level_layout = generate_level();
+    }
+    else
+    {
+        level_layout = scene.cache.text.get('level_' + level);
+    }
+}
+
 
 ////////////////////////////////////////
 function preload()
@@ -300,7 +383,7 @@ create()
 
     cursors = this.input.keyboard.createCursorKeys();
 
-    let level_layout = this.cache.text.get('level_' + level);
+    if(!level_layout) level_layout = this.cache.text.get('level_' + level);
     let level_data = load_level(this, level_layout);
 
     player    = level_data[0];
@@ -316,10 +399,11 @@ create()
     start_y = level_data[10];
     enemy_move_vel = move_vel / 2;
 
-    score_text = this.add.text(w/2, h*0.25, 'Score: ' + score, { fontSize: '24px', fill: '#ffffff' });
+    score_text = this.add.text(w/2, h*0.1, 'Score: ' + score, { fontSize: '46px', fill: '#ffffff' });
+    score_text.setOrigin(0.5, 0.5);
     score_text.setScrollFactor(0);
 
-    lives_text = this.add.text(0, 0, '❤️'.repeat(lives), { fontSize: '36px', fill: '#ffffff' });
+    lives_text = this.add.text(0, 0, '❤️'.repeat(lives), { fontSize: '48px', fill: '#ffffff' });
     lives_text.setScrollFactor(0);
 }
 

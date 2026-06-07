@@ -34,7 +34,7 @@ Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 4.0 Należy dodać przeciwników, których można zabić oraz 3 życia [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/f6242b967a4818fa5437d481da9389bb373efa78)
 
-:white_check_mark: 4.5 Ładowanie poziomów z pliku [Link do commita]()
+:white_check_mark: 4.5 Ładowanie poziomów z pliku [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/f06b9eb280b8e4c79fb7c63cd350531142198aca)
 
 :white_check_mark: 5.0 Generator poziomów [Link do commita]()
 
