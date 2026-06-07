@@ -17,7 +17,7 @@ Kod: [Link do zadania 1](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 3.5 Zapis i odczyt gier [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/d886ecbaaec0dd17a420a23f12552decd114f36e)
 
-:white_check_mark: 4.0 Dodanie efektów dźwiękowych przy akcjach [Link do commita]()
+:white_check_mark: 4.0 Dodanie efektów dźwiękowych przy akcjach [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/11302e2e2cf3afdf2509a9e87c3249d69e2f91d7)
 
 :white_check_mark: 4.5 odanie animacji przy zbijaniu klocków [Link do commita]()
 
