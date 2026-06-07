@@ -29,14 +29,15 @@ let level_layout = ` 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
                      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 M
                      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1
                      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                     0 0 0 0 0 0 1 1 1 0 0 0 1 0 0 0 1 1 0 0 0
-                     X 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
+                     0 0 0 0 0 0 1 1 1 0 0 0 I 0 0 0 1 1 0 0 0
+                     X 0 0 0 0 0 0 0 0 0 0 0 I 0 0 0 0 0 0 0 0
                      1 1 1 1 1 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0`;
 
 
 let player;
 let cursors;
 let platforms;
+let obstacles;
 
 let jump_vel;
 let move_vel;
@@ -93,6 +94,7 @@ load_level(scene, layout)
     let result_player;
     let result_platforms = scene.physics.add.staticGroup();
     let result_doors     = scene.physics.add.staticGroup();
+    let result_obstacles = scene.physics.add.staticGroup();
     let result_jump_vel = Math.sqrt(2*scene.physics.world.gravity.y *  2*tile_dim_y * 1.1);
     let result_move_vel = tile_dim_x * 3;
     let pos_x = 0;
@@ -105,6 +107,11 @@ load_level(scene, layout)
         if(ch === '1')
         {
             createRect(scene, tile_center_x, tile_center_y, tile_dim_x, tile_dim_y, 0x00ff00, result_platforms);
+            pos_x += 1;
+        }
+        else if(ch === 'I')
+        {
+            createRect(scene, tile_center_x, tile_center_y, tile_dim_x/2, tile_dim_y, 0x333333, result_obstacles);
             pos_x += 1;
         }
         else if(ch === 'X')
@@ -132,11 +139,13 @@ load_level(scene, layout)
 
     // Pack and send
     scene.physics.add.collider(result_player, result_platforms);
+    scene.physics.add.collider(result_player, result_obstacles);
     scene.physics.add.overlap(result_player, result_doors, finish_level, 0, scene);
     let result = [
         result_player,
         result_platforms,
         result_doors,
+        result_obstacles,
         result_jump_vel,
         result_move_vel,
     ];
@@ -158,8 +167,9 @@ create()
     player = level_data[0];
     platforms = level_data[1];
     doors = level_data[2];
-    jump_vel = level_data[3];
-    move_vel = level_data[4];
+    obstacles = level_data[3]
+    jump_vel = level_data[4];
+    move_vel = level_data[5];
 }
 
 
