@@ -19,10 +19,25 @@ Kod: [Link do zadania 1](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 4.0 Dodanie efektów dźwiękowych przy akcjach [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/11302e2e2cf3afdf2509a9e87c3249d69e2f91d7)
 
-:white_check_mark: 4.5 odanie animacji przy zbijaniu klocków [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/574994f1fdaa751d651cf65f46dceda3cdec27ae)
+:white_check_mark: 4.5 Dodanie animacji przy zbijaniu klocków [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/574994f1fdaa751d651cf65f46dceda3cdec27ae)
 
 :white_check_mark: 5.0 Wersja na iOS lub Android z implementacją touch zamiast klawiatury [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/9a5af106c3edcbd3aaa23e8051fd34219b0648f4)
 
 Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Lua/main.lua)
+
+
+**Zadanie 3** Mario w PhaserJS
+
+:white_check_mark: 3.0 Należy stworzyć jeden poziom z przeszkodami oraz dziurami w które można wpaść i zginąć [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/2fff4040d451ac1c69d954a60b0c15a4b51219fb)
+
+:white_check_mark: 3.5 Należy dodać opcję zbierania punktów [Link do commita]()
+
+:white_check_mark: 4.0 Należy dodać przeciwników, których można zabić oraz 3 życia [Link do commita]()
+
+:white_check_mark: 4.5 Ładowanie poziomów z pliku [Link do commita]()
+
+:white_check_mark: 5.0 Generator poziomów [Link do commita]()
+
+Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/JS/main.js)
 
 
