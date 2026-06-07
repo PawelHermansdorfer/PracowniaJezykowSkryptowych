@@ -28,7 +28,7 @@ Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 **Zadanie 3** Mario w PhaserJS
 
-:white_check_mark: 3.0 Należy stworzyć jeden poziom z przeszkodami oraz dziurami w które można wpaść i zginąć [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/2fff4040d451ac1c69d954a60b0c15a4b51219fb)
+:white_check_mark: 3.0 Należy stworzyć jeden poziom z przeszkodami oraz dziurami w które można wpaść i zginąć [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commits/main/)
 
 :white_check_mark: 3.5 Należy dodać opcję zbierania punktów [Link do commita]()
 

@@ -28,9 +28,9 @@ let level_layout = ` 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
                      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
                      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 M
                      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1
-                     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                     0 0 0 0 0 0 0 C 0 0 0 0 C 0 0 0 0 0 0 0 0
                      0 0 0 0 0 0 1 1 1 0 0 0 I 0 0 0 1 1 0 0 0
-                     X 0 0 0 0 0 0 0 0 0 0 0 I 0 0 0 0 0 0 0 0
+                     X 0 0 C 0 0 0 0 0 0 0 0 I 0 0 0 0 0 0 0 0
                      1 1 1 1 1 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0`;
 
 
@@ -38,11 +38,16 @@ let player;
 let cursors;
 let platforms;
 let obstacles;
+let coins;
 
 let jump_vel;
 let move_vel;
 
 let doors;
+
+let score = 0;
+let score_plus = 0;
+let score_text;
 
 
 function
@@ -61,6 +66,24 @@ function
 finish_level()
 {
     this.scene.restart();
+    score += score_plus;
+    score_plus = 0;
+    score_text.setText('Score: ' + score);
+}
+
+function
+collect_coins(player, coin)
+{
+    coin.destroy();
+    score_plus += 1;
+    score_text.setText('Score: ' + score + ' + ' + score_plus);
+}
+
+function
+die(scene)
+{
+    score_plus = 0;
+    scene.scene.restart();
 }
 
 
@@ -76,7 +99,7 @@ load_level(scene, layout)
     let dim_y = 0;
     for(const ch of layout)
     {
-        if (ch === '0' || ch === '1' || ch === 'X' || ch === 'M')
+        if (ch === '0' || ch === '1' || ch === 'X' || ch === 'M' || ch === 'I' || ch == 'C')
         {
             current_dim_x += 1;
         }
@@ -95,6 +118,7 @@ load_level(scene, layout)
     let result_platforms = scene.physics.add.staticGroup();
     let result_doors     = scene.physics.add.staticGroup();
     let result_obstacles = scene.physics.add.staticGroup();
+    let result_coins     = scene.physics.add.staticGroup();
     let result_jump_vel = Math.sqrt(2*scene.physics.world.gravity.y *  2*tile_dim_y * 1.1);
     let result_move_vel = tile_dim_x * 3;
     let pos_x = 0;
@@ -112,6 +136,12 @@ load_level(scene, layout)
         else if(ch === 'I')
         {
             createRect(scene, tile_center_x, tile_center_y, tile_dim_x/2, tile_dim_y, 0x333333, result_obstacles);
+            pos_x += 1;
+        }
+        else if(ch === 'C')
+        {
+            let size = Math.min(tile_dim_x/4, tile_dim_y/4)
+            createRect(scene, tile_center_x, tile_center_y, size, size, 0xFFFF00, result_coins);
             pos_x += 1;
         }
         else if(ch === 'X')
@@ -140,12 +170,16 @@ load_level(scene, layout)
     // Pack and send
     scene.physics.add.collider(result_player, result_platforms);
     scene.physics.add.collider(result_player, result_obstacles);
+
     scene.physics.add.overlap(result_player, result_doors, finish_level, 0, scene);
+    scene.physics.add.overlap(result_player, result_coins, collect_coins, 0, scene);
+
     let result = [
         result_player,
         result_platforms,
         result_doors,
         result_obstacles,
+        result_coins,
         result_jump_vel,
         result_move_vel,
     ];
@@ -164,12 +198,16 @@ create()
     cursors = this.input.keyboard.createCursorKeys();
 
     let level_data = load_level(this, level_layout);
-    player = level_data[0];
+    player    = level_data[0];
     platforms = level_data[1];
-    doors = level_data[2];
+    doors     = level_data[2];
     obstacles = level_data[3]
-    jump_vel = level_data[4];
-    move_vel = level_data[5];
+    coins     = level_data[4]
+    jump_vel  = level_data[5];
+    move_vel  = level_data[6];
+
+    score_text = this.add.text(w/2, h*0.25, 'Score: ' + score, { fontSize: '24px', fill: '#ffffff' });
+    score_text.setScrollFactor(0);
 }
 
 
@@ -200,6 +238,6 @@ update()
 
     if(player.y > h + 200)
     {
-        this.scene.restart();
+        die(this);
     }
 }
