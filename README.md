@@ -36,7 +36,7 @@ Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 4.5 Ładowanie poziomów z pliku [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/f06b9eb280b8e4c79fb7c63cd350531142198aca)
 
-:white_check_mark: 5.0 Generator poziomów [Link do commita]()
+:white_check_mark: 5.0 Generator poziomów [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/61ec454ed2cdf0ecad269fdfcc752bf210a73de7)
 
 Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/JS/main.js)
 
