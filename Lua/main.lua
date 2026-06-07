@@ -4,13 +4,10 @@ local board = {}
 
 local move_sound = love.audio.newSource("sound_1.wav", "static")
 move_sound:setVolume(0.5)
-
 local lock_block_sound = love.audio.newSource("sound_2.wav", "static")
 lock_block_sound:setVolume(0.5)
-
 local clear_row_sound = love.audio.newSource("sound_3.wav", "static")
 clear_row_sound:setVolume(0.5)
-
 local loose_sound = love.audio.newSource("sound_4.wav", "static")
 loose_sound:setVolume(1)
 function play_sound(sound)
@@ -18,16 +15,20 @@ function play_sound(sound)
     s:play()
 end
 
-love.window.setMode(960, 960, { resizable = true, vsync = true })
+love.window.setMode(720, 720, { resizable = true, vsync = true })
 
 local SAVE_FILE = "save.txt"
 local save_button = {}
 local load_button = {}
+
+local up_button = {}
+local down_button = {}
+local left_button = {}
+local right_button = {}
+
 function xy_in_rect(px, py, r)
-    return px >= r.x and
-           px <= r.x + r.w and
-           py >= r.y and
-           py <= r.y + r.h
+    return px >= r.x and px <= r.x + r.w and
+           py >= r.y and py <= r.y + r.h
 end
 
 function clear_board()
@@ -237,7 +238,7 @@ local blocks = {
     },
 }
 
-local current_block
+local current_block = nil
 local current_block_field_idx = 1
 local current_block_x = 0
 local current_block_y = 0
@@ -302,12 +303,10 @@ function next_block()
         end
     end
 end
-
-
+next_block()
 
 function finish_block()
     local shape = current_block.fields[current_block_field_idx]
-
     for y = 1, #shape do
         for x = 1, #shape[y] do
             if shape[y][x] == 1 then
@@ -324,9 +323,30 @@ function finish_block()
     end
 end
 
+local clearing_lines = false
+local lines_to_clear = {}
+local clearing_lines_t = 0
+local clearing_lines_total_t = 1
+
+function easeInBack(x)
+    local c1 = 1.70158
+    local c3 = c1 + 1
+
+    return c3 * x * x * x - c1 * x * x
+end
+
+function is_row_clearing(y)
+    local result = false
+    for _, row_idx in ipairs(lines_to_clear) do
+        if row_idx == y then
+            result = true
+            break
+        end
+    end
+    return result
+end
 
 function clear_lines()
-    local lines_cleared = 0
     local y = dim_y
 
     while y >= 1 do
@@ -341,30 +361,11 @@ function clear_lines()
         end
 
         if full then
-            lines_cleared = lines_cleared + 1
-
-            for yy = y, 2, -1 do
-                for x = 1, dim_x do
-                    local src = get_block(x, yy - 1)
-                    local dest = get_block(x, yy)
-
-                    dest[1] = src[1]
-                    dest[2] = src[2]
-                end
-            end
-
-            for x = 1, dim_x do
-                local top = get_block(x, 1)
-                top[1] = 0
-                top[2] = {0, 0, 0, 0}
-            end
-            play_sound(clear_row_sound)
-        else
-            y = y - 1
+            table.insert(lines_to_clear, y)
+            clearing_lines = true
         end
+        y = y - 1
     end
-
-    return lines_cleared
 end
 
 function handle_block_down_move()
@@ -373,9 +374,7 @@ function handle_block_down_move()
         play_sound(move_sound)
     else
         finish_block()
-        local points = clear_lines()
-        points = points * points
-        score = score + (points*100)
+        clear_lines()
         next_block()
         play_sound(lock_block_sound)
     end
@@ -404,12 +403,7 @@ function save_game()
         for x = 1, dim_x do
             local b = get_block(x, y)
 
-            data = data ..
-                b[1]    .. "," ..
-                b[2][1] .. "," ..
-                b[2][2] .. "," ..
-                b[2][3] .. "," ..
-                b[2][4] .. "\n"
+            data = data .. b[1]  .. "," .. b[2][1] .. "," .. b[2][2] .. "," .. b[2][3] .. "," .. b[2][4] .. "\n"
         end
     end
 
@@ -466,36 +460,46 @@ function load_game()
     return true
 end
 
-function love.keypressed(key)
-    if key == "left" then
+local UP = 0
+local LEFT = 1
+local RIGHT = 2
+local DOWN = 3
+
+function input(key)
+    if key == UP then
+        local next_idx = 1 + (current_block_field_idx % #current_block.fields)
+        if is_valid_position(current_block, next_idx, current_block_x, current_block_y) then
+            current_block_field_idx = next_idx
+        end
+    elseif key == LEFT then
         local nx = current_block_x - 1
         if is_valid_position(current_block, current_block_field_idx, nx, current_block_y) then
             current_block_x = nx
             play_sound(move_sound)
         end
-
-    elseif key == "right" then
+    elseif key == RIGHT then
         local nx = current_block_x + 1
         if is_valid_position(current_block, current_block_field_idx, nx, current_block_y) then
             current_block_x = nx
             play_sound(move_sound)
         end
-
-    elseif key == "down" then
+    elseif key == DOWN then
         handle_block_down_move()
         time_since_last_drop = 0
+    end
+end
 
-    elseif key == "up" then
-        local next_idx = 1 + (current_block_field_idx % #current_block.fields)
-        if is_valid_position(current_block, next_idx, current_block_x, current_block_y) then
-            current_block_field_idx = next_idx
+function love.keypressed(key)
+    if not clearing_lines then
+        if key == "left" then
+            input(LEFT)
+        elseif key == "right" then
+            input(RIGHT)
+        elseif key == "down" then
+            input(DOWN)
+        elseif key == "up" then
+            input(UP)
         end
-
-    elseif key == "s" then
-        save_game()
-
-    elseif key == "l" then
-        load_game()
     end
 end
 
@@ -508,25 +512,100 @@ function love.mousepressed(x, y, button)
         save_game()
     elseif xy_in_rect(x, y, load_button) then
         load_game()
+
+    elseif xy_in_rect(x, y, up_button) then
+            input(UP)
+    elseif xy_in_rect(x, y, down_button) then
+            input(DOWN)
+    elseif xy_in_rect(x, y, left_button) then
+            input(LEFT)
+    elseif xy_in_rect(x, y, right_button) then
+            input(RIGHT)
+    end
+end
+
+function love.touchpressed(id, x, y)
+    local w, h = love.graphics.getDimensions()
+    x = x * w
+    y = y * h
+
+    if xy_in_rect(x, y, save_button) then
+        save_game()
+    elseif xy_in_rect(x, y, load_button) then
+        load_game()
+
+    elseif xy_in_rect(x, y, up_button) then
+            input(UP)
+    elseif xy_in_rect(x, y, down_button) then
+            input(DOWN)
+    elseif xy_in_rect(x, y, left_button) then
+            input(LEFT)
+    elseif xy_in_rect(x, y, right_button) then
+            input(RIGHT)
     end
 end
 
 function love.update(dt)
-    if finished then 
-        finished = false
-        clear_board()
-        next_block()
-        time_since_last_drop = 0
-        score = 0
-        play_sound(loose_sound)
+    if clearing_lines then
+        clearing_lines_t = clearing_lines_t + dt
+        if clearing_lines_t >= clearing_lines_total_t then
+            -- Clear
+            local y = dim_y
+            while y >= 1 do
+                local full = true
+
+                for x = 1, dim_x do
+                    local cell = get_block(x, y)
+                    if not cell or cell[1] == 0 then
+                        full = false
+                        break
+                    end
+                end
+
+                if full then
+                    for yy = y, 2, -1 do
+                        for x = 1, dim_x do
+                            local src = get_block(x, yy - 1)
+                            local dest = get_block(x, yy)
+
+                            dest[1] = src[1]
+                            dest[2] = src[2]
+                        end
+                    end
+
+                    for x = 1, dim_x do
+                        local top = get_block(x, 1)
+                        top[1] = 0
+                        top[2] = {0, 0, 0, 0}
+                    end
+                else
+                    y = y - 1
+                end
+            end
+
+            score = score + (#lines_to_clear * #lines_to_clear * 100)
+            clearing_lines = false
+            clearing_lines_t = 0
+            lines_to_clear = {}
+
+            play_sound(clear_row_sound)
+        end
     else
-        time_since_last_drop = time_since_last_drop + dt
-        if time_since_last_drop >= 1 then
+        if finished then 
+            finished = false
+            clear_board()
+            next_block()
             time_since_last_drop = 0
-            handle_block_down_move()
+            score = 0
+            play_sound(loose_sound)
+        else
+            time_since_last_drop = time_since_last_drop + dt
+            if time_since_last_drop >= 1 then
+                time_since_last_drop = 0
+                handle_block_down_move()
+            end
         end
     end
-
 end
 
 
@@ -551,15 +630,26 @@ function love.draw()
 
     -- Draw board
     for y = 1, dim_y do
+        local a = 1.0
+        local offset_y = 0
+        if is_row_clearing(y) then
+            local t = (clearing_lines_t/clearing_lines_total_t)
+            a = 1 - t
+            offset_y = easeInBack(t)*2 * cell_size*5
+        end
+
         for x = 1, dim_x do
             local block = get_block(x, y)
             if block and block[1] == 1 then
-                love.graphics.setColor(block[2])
+                love.graphics.setColor(block[2][1],
+                                       block[2][2],
+                                       block[2][3],
+                                       a)
                 love.graphics.rectangle(
                     "fill",
                     (x - 1) * cell_size,
-                    (y - 1) * cell_size,
-                    cell_size,
+                    (y - 1) * cell_size + offset_y,
+                    cell_size, 
                     cell_size
                 )
             end
@@ -567,18 +657,20 @@ function love.draw()
     end
 
     -- Draw block
-    local shape = current_block.fields[current_block_field_idx]
-    for y = 1, #shape do
-        for x = 1, #shape[y] do
-            if shape[y][x] == 1 then
-                love.graphics.setColor(current_block.color)
-                love.graphics.rectangle(
-                    "fill",
-                    (current_block_x + x - 1) * cell_size,
-                    (current_block_y + y - 1) * cell_size,
-                    cell_size,
-                    cell_size
-                )
+    if not clearing_lines then
+        local shape = current_block.fields[current_block_field_idx]
+        for y = 1, #shape do
+            for x = 1, #shape[y] do
+                if shape[y][x] == 1 then
+                    love.graphics.setColor(current_block.color)
+                    love.graphics.rectangle(
+                        "fill",
+                        (current_block_x + x - 1) * cell_size,
+                        (current_block_y + y - 1) * cell_size,
+                        cell_size,
+                        cell_size
+                    )
+                end
             end
         end
     end
@@ -605,14 +697,18 @@ function love.draw()
     save_button.w = button_width
     save_button.h = 50
 
-    load_button.x = right_center - button_width/2
-    load_button.y = 150
-    load_button.w = button_width
-    load_button.h = 50
-
     love.graphics.setColor(0.2, 0.6, 0.2)
     love.graphics.rectangle(
         "fill",
+        save_button.x,
+        save_button.y,
+        save_button.w,
+        save_button.h
+    )
+
+    love.graphics.setColor(0, 0.2, 0)
+    love.graphics.rectangle(
+        "line",
         save_button.x,
         save_button.y,
         save_button.w,
@@ -628,9 +724,23 @@ function love.draw()
         "center"
     )
 
+    load_button.x = right_center - button_width/2
+    load_button.y = 150
+    load_button.w = button_width
+    load_button.h = 50
+
     love.graphics.setColor(0.2, 0.2, 0.8)
     love.graphics.rectangle(
         "fill",
+        load_button.x,
+        load_button.y,
+        load_button.w,
+        load_button.h
+    )
+
+    love.graphics.setColor(0, 0, 0.2)
+    love.graphics.rectangle(
+        "line",
         load_button.x,
         load_button.y,
         load_button.w,
@@ -646,6 +756,131 @@ function love.draw()
         "center"
     )
 
-end
+    -- Arrows
+    button_width = w * 0.3 * 0.4
+    local button_offset = 10
+    up_button.x = right_center - button_width/2
+    up_button.y = h - button_width*2 - button_offset*2
+    up_button.w = button_width
+    up_button.h = button_width
 
-next_block()
+    down_button.x = up_button.x
+    down_button.y = up_button.y + up_button.h + button_offset
+    down_button.w = button_width 
+    down_button.h = button_width
+
+    left_button.x = down_button.x - (button_width + button_offset)
+    left_button.y = down_button.y
+    left_button.w = button_width 
+    left_button.h = button_width 
+
+    right_button.x = down_button.x + (button_width + button_offset)
+    right_button.y = down_button.y
+    right_button.w = button_width 
+    right_button.h = button_width 
+
+    -- Fills
+    love.graphics.setColor(0.1, 0.1, 0.1, 0.3)
+    love.graphics.rectangle(
+        "fill",
+        up_button.x,
+        up_button.y,
+        up_button.w,
+        up_button.h
+    )
+
+    love.graphics.rectangle(
+        "fill",
+        down_button.x,
+        down_button.y,
+        down_button.w,
+        down_button.h
+    )
+
+    love.graphics.rectangle(
+        "fill",
+        left_button.x,
+        left_button.y,
+        left_button.w,
+        left_button.h
+    )
+
+    love.graphics.rectangle(
+        "fill",
+        right_button.x,
+        right_button.y,
+        right_button.w,
+        right_button.h
+    )
+
+    -- Borders
+    love.graphics.setColor(0.3, 0.3, 0.3)
+    love.graphics.rectangle(
+        "line",
+        up_button.x,
+        up_button.y,
+        up_button.w,
+        up_button.h
+    )
+
+    love.graphics.rectangle(
+        "line",
+        down_button.x,
+        down_button.y,
+        down_button.w,
+        down_button.h
+    )
+
+    love.graphics.rectangle(
+        "line",
+        left_button.x,
+        left_button.y,
+        left_button.w,
+        left_button.h
+    )
+
+    love.graphics.rectangle(
+        "line",
+        right_button.x,
+        right_button.y,
+        right_button.w,
+        right_button.h
+    )
+
+    -- Text
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        "R",
+        up_button.x,
+        up_button.y + button_width/3,
+        button_width,
+        "center"
+    )
+
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        "\\/",
+        down_button.x,
+        down_button.y + button_width/3,
+        button_width,
+        "center"
+    )
+
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        ">",
+        right_button.x,
+        right_button.y + button_width/3,
+        button_width,
+        "center"
+    )
+
+    love.graphics.setColor(1,1,1)
+    love.graphics.printf(
+        "<",
+        left_button.x,
+        left_button.y + button_width/3,
+        button_width,
+        "center"
+    )
+end
