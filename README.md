@@ -32,7 +32,7 @@ Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 3.5 Należy dodać opcję zbierania punktów [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/a9398ce939c7457df29d83861e950515b151ead1)
 
-:white_check_mark: 4.0 Należy dodać przeciwników, których można zabić oraz 3 życia [Link do commita]()
+:white_check_mark: 4.0 Należy dodać przeciwników, których można zabić oraz 3 życia [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/f6242b967a4818fa5437d481da9389bb373efa78)
 
 :white_check_mark: 4.5 Ładowanie poziomów z pliku [Link do commita]()
 
