@@ -38,6 +38,21 @@ Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 5.0 Generator poziomów [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/61ec454ed2cdf0ecad269fdfcc752bf210a73de7)
 
-Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/JS/main.js)
+Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/JS/main.js)
+
+
+**Zadanie 4** Crawler w Ruby
+
+:white_check_mark: 3.0 Należy pobrać podstawowe dane o produktach (tytuł, cena), dowolna kategoria [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/fe609818a829fb5b36f560d73e69432332752c0f)
+
+:white_check_mark: 3.5 Należy pobrać podstawowe dane o produktach wg słów kluczowych [Link do commita]()
+
+:white_check_mark: 4.0 Należy rozszerzyć dane o produktach o dane szczegółowe widoczne tylko na podstronie o produkcie [Link do commita]()
+
+:white_check_mark: 4.5 Należy zapisać linki do produktów [Link do commita]()
+
+:white_check_mark: 5.0 Dane należy zapisać w bazie danych np. SQLite via Sequel [Link do commita]()
+
+Kod: [Link do zadania 4](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Ruby/main.rb)
 
 
