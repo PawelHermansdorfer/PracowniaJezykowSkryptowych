@@ -47,7 +47,7 @@ Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 3.5 Należy pobrać podstawowe dane o produktach wg słów kluczowych [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/2a6fa08719f3f538546cf5a3f448e1636290bc2a)
 
-:white_check_mark: 4.0 Należy rozszerzyć dane o produktach o dane szczegółowe widoczne tylko na podstronie o produkcie [Link do commita]()
+:white_check_mark: 4.0 Należy rozszerzyć dane o produktach o dane szczegółowe widoczne tylko na podstronie o produkcie [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/5d0c5d47e22e0a563e0e1abe8326c6ac68e1d9d4)
 
 :x: 4.5 Należy zapisać linki do produktów [Link do commita]()
 
