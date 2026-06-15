@@ -1,49 +1,79 @@
 import json
 import requests
-from prompt import build_system_prompt
 
 
 def filter_input(text: str) -> bool:
     text_lower = text.lower()
     return not any(word in text_lower for word in ["kill", "weapon", "drugs", "hack"])
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "llama3"
 
-# wczytanie configu
-with open("config.json", "r") as f:
-    config = json.load(f)
+def get_core_prompt():
+    return f"""
+Jesteś chatbotem pizzerii.
 
-SYSTEM_PROMPT = build_system_prompt(config)
+Twoim zadaniem jest rozpoznanie intencji użytkownika i odpowiednie zareagowanie.
 
-def ask_llm(user_input):
-    payload = {
-        "model": MODEL,
-        "prompt": SYSTEM_PROMPT + "\nUżytkownik: " + user_input + "\nAsystent:",
-        "stream": False
-    }
+Intencje użytkownika:
+1. Powitanie:
+   - "Cześć", "Hej", "Dzień dobry"
+   - Odpowiadasz krótkim powitaniem
 
-    response = requests.post(OLLAMA_URL, json=payload)
-    return response.json()["response"]
+2. MENU:
+   - "Menu", "Co sprzedajecie", "Jak jest wasza oferta"
+   - Podajesz menu z cenami w formie: Pozycja: cena + PLN
+
+3. Lokalizacje restauracji
+   - "Gdzie macie lokale"
+   - Podajesz listę maiast
+
+Fallback, brak intencji lub niejasna wiadomość:
+jeśli użytkownik niejasno sformułuje wiadomość lub nie pasuje do żadnej intencji wtedy:
+  poproś o doprecyzowanie i ponownie przedstaw dostępne możliwości:  podawanie godzin otwarcia, prezentowanie menu z cenami, informowanie o lokalizacji restauracji
+
+DANE RESTAURACJI:
+Godziny otwarcia: 8:00 - 22:00
+
+Menu:
+Margherita - 25
+Capricciosa - 30
+Pepperoni - 35
+Quattro Formaggi - 35
+Hawaiian - 40
+Prosciutto Crudo - 35 
+In Polcao - 45
+Frutti di Mare - 50
+
+Lokalizacje: Warszawa, Katowice, Gdynia
+
+Zasady:
+- Odpowiadaj krótko
+- Nie zadawaj wielu pytań naraz
+"""
+core_prompt = get_core_prompt()
 
 
-def chat():
-    print("Czatbot uruchomiony. (exit aby zakończyć)")
+def send_prompt(user_text):
+    if not filter_input(user_text):
+        print("ChatBot: Nie mogę odpowiedzieć na tę wiadomość.")
+        return
 
-    while True:
-        user_input = input("Ty: ")
+    response = requests.post(
+        "http://localhost:11434/api/chat",
+        json={
+            "model": "llama3",
+            "messages": [
+                {"role": "system", "content": core_prompt},
+                {"role": "user", "content": user_text}
+            ],
+            "stream": False
+        }
+    )
 
-        if user_input.lower() == "exit":
-            break
-
-        # filtr
-        if not filter_input(user_input):
-            print("Bot: Nie mogę odpowiedzieć na tę wiadomość.")
-            continue
-
-        response = ask_llm(user_input)
-        print("Bot:", response)
-
+    return response.json()["message"]["content"]
 
 if __name__ == "__main__":
-    chat()
+    print("Start")
+    while True:
+        prompt = input("Ty: ")
+        response = send_prompt(prompt)
+        print("ChatBot:", response)
