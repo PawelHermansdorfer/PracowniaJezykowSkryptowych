@@ -1,4 +1,5 @@
 require 'selenium-webdriver'
+require 'json'
 
 wait   = Selenium::WebDriver::Wait.new(timeout: 15)
 driver = Selenium::WebDriver.for :chrome
@@ -7,8 +8,8 @@ driver.navigate.to "https://www.amazon.pl"
 sleep 1
 
 print "Enter search phrase: "
-# query = gets.chomp
-query = "pokemon"
+query = gets.chomp
+# query = "pokemon"
 
 search_box = wait.until { driver.find_element(name: 'field-keywords') }
 search_box.send_keys(query)
@@ -57,9 +58,11 @@ results.each do |item|
   item[:delivery] = delivery_info
 end
 
-results.each do |item|
-  puts item[:title]
-  puts item[:price]
-  puts item[:delivery]
-  puts "\n"
+File.open("results.txt", "w") do |f|
+  results.each do |item|
+    f.puts item[:title]
+    f.puts item[:price]
+    f.puts item[:delivery]
+    f.puts "\n"
+  end
 end
