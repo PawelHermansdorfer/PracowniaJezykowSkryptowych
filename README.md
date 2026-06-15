@@ -61,7 +61,7 @@ Kod: [Link do zadania 4](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 3.0 Czatbot z wytrenowaną umiejętnością (poprzez prompt) obsługi co najmniej 3 sposobów sformułowania intencji (powitanie, menu, zamówienie) [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/924e49252fd8537f0e989f8031caa3f8aa14145a)
 
-:white_check_mark: 3.5 Informacje o godzinach otwarcia i pozycjach w menu powinny być pobierane z pliku konfiguracyjnego (JSON/YAML) i przekazywane do modelu. [Link do commita]()
+:white_check_mark: 3.5 Informacje o godzinach otwarcia i pozycjach w menu powinny być pobierane z pliku konfiguracyjnego (JSON/YAML) i przekazywane do modelu. [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/04c2925e2af79363ebb73812468129e6a9b10a7d)
 
 :x: 4.0 Czatbot musi przetworzyć zamówienie i potwierdzić zakupione posiłki, a także obsłużyć dodatkowe prośby (np. alergie, modyfikacje dań). Dane o alergiach, składzie, daniach ładowy z api aplikacji webowej napisanej we Flasku (https://flask.palletsprojects.com/en/stable/). [Link do commita]()
 
