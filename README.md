@@ -56,3 +56,23 @@ Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 Kod: [Link do zadania 4](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Ruby/main.rb)
 
 
+
+**Zadanie 5** Python LLM
+
+:white_check_mark: 3.0 Czatbot z wytrenowaną umiejętnością (poprzez prompt) obsługi co najmniej 3 sposobów sformułowania intencji (powitanie, menu, zamówienie) [Link do commita]()
+
+:white_check_mark: 3.5 Informacje o godzinach otwarcia i pozycjach w menu powinny być pobierane z pliku konfiguracyjnego (JSON/YAML) i przekazywane do modelu. [Link do commita]()
+
+:x: 4.0 Czatbot musi przetworzyć zamówienie i potwierdzić zakupione posiłki, a także obsłużyć dodatkowe prośby (np. alergie, modyfikacje dań). Dane o alergiach, składzie, daniach ładowy z api aplikacji webowej napisanej we Flasku (https://flask.palletsprojects.com/en/stable/). [Link do commita]()
+
+:x: 4.5 Czatbot musi potwierdzić, kiedy posiłek będzie dostępny do odbioru w restauracji (estymacja czasu na podstawie zamówienia). [Link do commita]()
+
+:x: 5.0 Czatbot powinien zapytać o adres dostawy i potwierdzić go, zamiast opcji odbioru osobistego, weryfikując kompletność danych adresowych. Zapisać zamówienie przez wywołanie api aplikacji we Flasku. We Flasku zapisujemy dane zamówienia w bazie. [Link do commita]()
+
+Kod: [Link do zadania 5]()
+
+
+
+
+
+

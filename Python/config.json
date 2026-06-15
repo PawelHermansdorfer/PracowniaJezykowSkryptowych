@@ -1,0 +1,13 @@
+{
+  "schedudle": "8:00 - 22:00",
+  "menu": [
+    { "name": "Margherita",       "price": 25 },
+    { "name": "Capricciosa",      "price": 30 },
+    { "name": "Pepperoni",        "price": 35 },
+    { "name": "Quattro Formaggi", "price": 40 },
+    { "name": "Hawaiian",         "price": 35 },
+    { "name": "Prosciutto Crudo", "price": 40 },
+    { "name": "In Polcao",        "price": 40 },
+    { "name": "Frutti di Mare",   "price": 50 }
+  ]
+}
