@@ -4,7 +4,7 @@
 
 :white_check_mark: 4.0 Pozwala na zapis i odtwarzanie przerwanej gry (save game) [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/24718f9ac99909d9efe834f9629d4748dbba888f)
 
-:white_check_mark: 5.0 Pozwala na grę z komputerem. [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/4b125725fd84daa8b18aa9c8df46e7be0060cac7)
+:white_check_mark: 5.0 Pozwala na grę z komputerem. [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/8c717c0bfa85962c4e1bc897bf5f353b9cd6fe30)
 
 Kod: [Link do zadania 1](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Bash/main.sh)
 
