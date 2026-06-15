@@ -43,11 +43,11 @@ Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 **Zadanie 4** Crawler w Ruby
 
-:white_check_mark: 3.0 Należy pobrać podstawowe dane o produktach (tytuł, cena), dowolna kategoria [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/0d14cf02ad7d5a2506158d3d2d4499311947d80c)
+:white_check_mark: 3.0 Należy pobrać podstawowe dane o produktach (tytuł, cena), dowolna kategoria [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/b64d2176e0eabeb55b50507c956b80f7688903f5)
 
-:white_check_mark: 3.5 Należy pobrać podstawowe dane o produktach wg słów kluczowych [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/2a6fa08719f3f538546cf5a3f448e1636290bc2a)
+:white_check_mark: 3.5 Należy pobrać podstawowe dane o produktach wg słów kluczowych [Link do commita]()
 
-:white_check_mark: 4.0 Należy rozszerzyć dane o produktach o dane szczegółowe widoczne tylko na podstronie o produkcie [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/5d0c5d47e22e0a563e0e1abe8326c6ac68e1d9d4)
+:white_check_mark: 4.0 Należy rozszerzyć dane o produktach o dane szczegółowe widoczne tylko na podstronie o produkcie [Link do commita]()
 
 :x: 4.5 Należy zapisać linki do produktów [Link do commita]()
 
@@ -61,7 +61,7 @@ Kod: [Link do zadania 4](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 3.0 Czatbot z wytrenowaną umiejętnością (poprzez prompt) obsługi co najmniej 3 sposobów sformułowania intencji (powitanie, menu, zamówienie) [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/924e49252fd8537f0e989f8031caa3f8aa14145a)
 
-:white_check_mark: 3.5 Informacje o godzinach otwarcia i pozycjach w menu powinny być pobierane z pliku konfiguracyjnego (JSON/YAML) i przekazywane do modelu. [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/b64d2176e0eabeb55b50507c956b80f7688903f5)
+:white_check_mark: 3.5 Informacje o godzinach otwarcia i pozycjach w menu powinny być pobierane z pliku konfiguracyjnego (JSON/YAML) i przekazywane do modelu. [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/04c2925e2af79363ebb73812468129e6a9b10a7d)
 
 :x: 4.0 Czatbot musi przetworzyć zamówienie i potwierdzić zakupione posiłki, a także obsłużyć dodatkowe prośby (np. alergie, modyfikacje dań). Dane o alergiach, składzie, daniach ładowy z api aplikacji webowej napisanej we Flasku (https://flask.palletsprojects.com/en/stable/). [Link do commita]()
 
