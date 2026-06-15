@@ -23,8 +23,8 @@ items.first(20).each do |item|
   price_whole      = item.find_elements(css: '.a-price-whole').first&.text
   price_fractional = item.find_elements(css: '.a-price-fraction').first&.text
   currancy         = item.find_elements(css: '.a-price-symbol').first&.text
-  link = item.find_elements(css: 'a.a-link-normal.s-no-outline').first
-  link = link&.attribute('href')
+  # link = item.find_elements(css: 'a.a-link-normal.s-no-outline').first
+  # link = link&.attribute('href')
 
   puts title
   puts "#{price_whole}.#{price_fractional}#{currancy}"
