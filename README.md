@@ -8,7 +8,7 @@
 
 Kod: [Link do zadania 1](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Bash/main.sh)
 
-<!-- https://github.com/user-attachments/assets/filmik/ -->
+https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/tree/main/Nagrania/Bash
 
 
 **Zadanie 2** Tetris  w Lua
@@ -25,6 +25,8 @@ Kod: [Link do zadania 1](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Lua/main.lua)
 
+https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/tree/main/Nagrania/Lua
+
 
 **Zadanie 3** Mario w PhaserJS
 
@@ -39,6 +41,8 @@ Kod: [Link do zadania 2](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 :white_check_mark: 5.0 Generator poziomów [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/61ec454ed2cdf0ecad269fdfcc752bf210a73de7)
 
 Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/JS/main.js)
+
+https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/tree/main/Nagrania/JS
 
 
 **Zadanie 4** Crawler w Ruby
@@ -55,6 +59,7 @@ Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 Kod: [Link do zadania 4](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Ruby/main.rb)
 
+https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/tree/main/Nagrania/Ruby
 
 
 **Zadanie 5** Python LLM
@@ -70,3 +75,5 @@ Kod: [Link do zadania 4](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 :x: 5.0 Czatbot powinien zapytać o adres dostawy i potwierdzić go, zamiast opcji odbioru osobistego, weryfikując kompletność danych adresowych. Zapisać zamówienie przez wywołanie api aplikacji we Flasku. We Flasku zapisujemy dane zamówienia w bazie. [Link do commita]()
 
 Kod: [Link do zadania 5](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Python/main.py)
+
+https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/tree/main/Nagrania/Python
