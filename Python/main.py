@@ -7,7 +7,7 @@ def filter_input(text: str) -> bool:
     return not any(word in text_lower for word in ["kill", "weapon", "drugs", "hack"])
 
 
-def get_core_prompt():
+def get_core_prompt(config):
     return f"""
 Jesteś chatbotem pizzerii.
 
@@ -31,25 +31,24 @@ jeśli użytkownik niejasno sformułuje wiadomość lub nie pasuje do żadnej in
   poproś o doprecyzowanie i ponownie przedstaw dostępne możliwości:  podawanie godzin otwarcia, prezentowanie menu z cenami, informowanie o lokalizacji restauracji
 
 DANE RESTAURACJI:
-Godziny otwarcia: 8:00 - 22:00
+Godziny otwarcia:
+{config['schedule']}
 
 Menu:
-Margherita - 25
-Capricciosa - 30
-Pepperoni - 35
-Quattro Formaggi - 35
-Hawaiian - 40
-Prosciutto Crudo - 35 
-In Polcao - 45
-Frutti di Mare - 50
+{config['menu']}
 
-Lokalizacje: Warszawa, Katowice, Gdynia
+Lokalizacje:
+{config['locations']}
 
 Zasady:
 - Odpowiadaj krótko
 - Nie zadawaj wielu pytań naraz
 """
-core_prompt = get_core_prompt()
+
+config = None
+with open("config.json", "r") as f:
+    config = json.load(f)
+core_prompt = get_core_prompt(config)
 
 
 def send_prompt(user_text):
@@ -70,6 +69,7 @@ def send_prompt(user_text):
     )
 
     return response.json()["message"]["content"]
+
 
 if __name__ == "__main__":
     print("Start")
