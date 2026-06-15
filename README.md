@@ -49,7 +49,7 @@ Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 4.0 Należy rozszerzyć dane o produktach o dane szczegółowe widoczne tylko na podstronie o produkcie [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/5ad22180daf61c05cde4ff14353fe621fd945362)
 
-:white_check_mark: 4.5 Należy zapisać linki do produktów [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/8f11f5ccf55fffef3058d606fef8bef7a4bf155b)
+:white_check_mark: 4.5 Należy zapisać linki do produktów [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/e951b0febb307a85717dfd934fc3dcbf63736156)
 
 :x: 5.0 Dane należy zapisać w bazie danych np. SQLite via Sequel [Link do commita]()
 
