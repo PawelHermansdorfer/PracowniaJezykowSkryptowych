@@ -43,7 +43,7 @@ Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 **Zadanie 4** Crawler w Ruby
 
-:white_check_mark: 3.0 Należy pobrać podstawowe dane o produktach (tytuł, cena), dowolna kategoria [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/fe609818a829fb5b36f560d73e69432332752c0f)
+:white_check_mark: 3.0 Należy pobrać podstawowe dane o produktach (tytuł, cena), dowolna kategoria [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/0d14cf02ad7d5a2506158d3d2d4499311947d80c)
 
 :white_check_mark: 3.5 Należy pobrać podstawowe dane o produktach wg słów kluczowych [Link do commita]()
 

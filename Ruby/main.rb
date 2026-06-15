@@ -27,7 +27,9 @@ def list_amazon_items(query)
   items
 end
 
-items = list_amazon_items("pokemon")
+print "Enter search phrase: "
+phrase = STDIN.gets&.chomp
+items = list_amazon_items(phrase)
 
 items.each_with_index do |item|
   puts "#{item[:title]}"
