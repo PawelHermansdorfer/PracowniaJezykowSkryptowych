@@ -193,7 +193,11 @@ while true; do
         break
 
     elif [[ "$choice" == "3" ]]; then
-        ai_opponent=!$ai_opponent
+        if $ai_opponent; then
+            ai_opponent=false
+        else
+            ai_opponent=true
+        fi
     fi
 done
 
