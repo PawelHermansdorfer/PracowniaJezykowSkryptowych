@@ -45,7 +45,7 @@ Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :white_check_mark: 3.0 Należy pobrać podstawowe dane o produktach (tytuł, cena), dowolna kategoria [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/b64d2176e0eabeb55b50507c956b80f7688903f5)
 
-:white_check_mark: 3.5 Należy pobrać podstawowe dane o produktach wg słów kluczowych [Link do commita]()
+:white_check_mark: 3.5 Należy pobrać podstawowe dane o produktach wg słów kluczowych [Link do commita](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/commit/257d5bde24c650fb1a59c7585a9dfbbe95ca51be)
 
 :white_check_mark: 4.0 Należy rozszerzyć dane o produktach o dane szczegółowe widoczne tylko na podstronie o produkcie [Link do commita]()
 
