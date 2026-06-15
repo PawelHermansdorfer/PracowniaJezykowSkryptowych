@@ -51,7 +51,7 @@ Kod: [Link do zadania 3](https://github.com/PawelHermansdorfer/PracowniaJezykowS
 
 :x: 4.5 Należy zapisać linki do produktów [Link do commita]()
 
-::x: 5.0 Dane należy zapisać w bazie danych np. SQLite via Sequel [Link do commita]()
+:x: 5.0 Dane należy zapisać w bazie danych np. SQLite via Sequel [Link do commita]()
 
 Kod: [Link do zadania 4](https://github.com/PawelHermansdorfer/PracowniaJezykowSkryptowych/blob/main/Ruby/main.rb)
 
