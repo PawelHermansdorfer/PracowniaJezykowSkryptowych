@@ -63,6 +63,7 @@ File.open("results.txt", "w") do |f|
     f.puts item[:title]
     f.puts item[:price]
     f.puts item[:delivery]
+    f.puts item[:url]
     f.puts "\n"
   end
 end
